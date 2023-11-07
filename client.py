@@ -85,7 +85,6 @@ def write():
                 print(f'Failed to close the connection: {e}\n')
             break  # Exit the write loop
 
-
 # Creates a thread to reviece messages between users
 recieve_thread =  threading.Thread(target=recieve)
 
