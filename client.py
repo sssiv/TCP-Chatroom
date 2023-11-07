@@ -41,8 +41,6 @@ def recieve():
 
             # When you enter in a prompt,
             # The server is no longer sending messages to the client directly
-            # therefore, the message should be anything else
-            # But what happens when the users message is 'Enter a username: '?
             else:
                 print(message)
 
