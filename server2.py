@@ -2,15 +2,13 @@ import threading
 import socket
 import netifaces as ni
 
-# Gets local machine address
-# Holds Host IP and Port
+# Gets local machine address and holds Host IP and Port
 class IPv4:
     def __init__(self):
         self.host = self.local_ip()  # Local Host 
         self.port = 12345            # Port isn't reserved so I chose it
 
-    # Gets the name of your machine
-    # Finds your IP from using your machines name
+    # Finds your IP by scanning your NIC
     def local_ip(self):
         # Get all network interfaces (keys from the interfaces dictionary)
         interfaces = ni.interfaces()
@@ -49,9 +47,7 @@ server.bind((host, port))
 # Sets server on standby for incoming connections
 server.listen()
 
-# Map{Key, value}
-# Key = Clients
-# value = usernames
+# Map{Key = Clients, value = Usernames}
 clients_usernames_map = {}
 
 # Add new client mapped to their username
@@ -79,7 +75,8 @@ def users_list():
 # But when the leave keyword is used,
 # it handles disconnecting the said client
 def handle(client):
-    while True:
+    running = True
+    while running:
         try:
             # Server recieving a message from a client to broadcast
             message = client.recv(1024).decode('ascii')
@@ -99,19 +96,32 @@ def handle(client):
                 client.close()
                 print(f'{username} has gracefully disconnected\n')
 
-                # Display current clients
+                # Display current clients to the server
                 users_list()
+                running = False
                 break
             else:
                 # Broadcast recieved message to all clients
                 broadcast(message.encode('ascii'))
+
         except Exception as e:
+            # Display Error 
+            print(f"An error occurred: {e}")
+
+            # Terminates Client connection
             client.close()
+
+            # If the client where this error happened is found
             if client in clients_usernames_map:
+                # Tell the chat they left unexpectedly
                 print(f"{clients_usernames_map[client]} has unexpectedly disconnected")
-                remove_client(clients_usernames_map[client])
+                # Then remove them from the map
+                remove_client(client)
+            # Set running flag to off
+            running = False
             break
 
+# Recieve new Client connections
 def receive():
     while True:
 

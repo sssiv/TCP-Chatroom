@@ -2,15 +2,13 @@ import threading
 import socket
 import netifaces as ni
 
-# Gets local machine address
-# Holds Host IP and Port
+# Gets local machine address and holds Host IP and Port
 class IPv4:
     def __init__(self):
         self.host = self.local_ip()  # Local Host 
         self.port = 12345            # Port isn't reserved so I chose it
 
-    # Gets the name of your machine
-    # Finds your IP from using your machines name
+    # Finds your IP by scanning your NIC
     def local_ip(self):
         # Get all network interfaces (keys from the interfaces dictionary)
         interfaces = ni.interfaces()
@@ -103,8 +101,6 @@ def handle(client):
         except Exception as e:
             print(f"An error occurred: {e}")
             client.close()
-            # Attempt to cleanup the client's information
-
             break
 
 # Recieving new clients
