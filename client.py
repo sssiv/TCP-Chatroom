@@ -11,11 +11,11 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Server IP
 network_part = '192.168.1.'
-host_part = input('Enter in server IP: ')
+host_part = input('Enter in host part: ')
 host = network_part + host_part
 
 # Creates an input string to get username from client
-username = input('Pick a username: ')
+username = input('Enter a username: ')
 
 # Connect the client to the server
 client.connect((host, port))

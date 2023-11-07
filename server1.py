@@ -99,7 +99,10 @@ def handle(client):
                 broadcast(message.encode('ascii'))
 
         except Exception as e:
+            # Display error code/status
             print(f"An error occurred: {e}")
+
+            # Terminate Client connection
             client.close()
             break
 
@@ -145,5 +148,5 @@ def recieve():
 
 # Server is open to reviece new clients
 print('Host IP: ', host)
-print("Server is listening . . .\n")
+print('Server is now active\n')
 recieve()

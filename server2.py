@@ -105,18 +105,19 @@ def handle(client):
                 broadcast(message.encode('ascii'))
 
         except Exception as e:
-            # Display Error 
+            # Display Error code/status
             print(f"An error occurred: {e}")
 
             # Terminates Client connection
             client.close()
 
-            # If the client where this error happened is found
+            # If the client where this error happened is found in the map
             if client in clients_usernames_map:
                 # Tell the chat they left unexpectedly
                 print(f"{clients_usernames_map[client]} has unexpectedly disconnected")
                 # Then remove them from the map
                 remove_client(client)
+
             # Set running flag to off
             running = False
             break
@@ -157,5 +158,5 @@ def receive():
         thread.start()
 
 print('Host IP: ', host)
-print("Server is listening . . .\n")
+print('Server is now active\n')
 receive()
