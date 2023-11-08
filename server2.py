@@ -75,8 +75,8 @@ def users_list():
 # But when the leave keyword is used,
 # it handles disconnecting the said client
 def handle(client):
-    running = True
-    while running:
+    threading = True
+    while threading:
         try:
             # Server recieving a message from a client to broadcast
             message = client.recv(1024).decode('ascii')
@@ -98,7 +98,7 @@ def handle(client):
 
                 # Display current clients to the server
                 users_list()
-                running = False
+                threading = False
                 break
             else:
                 # Broadcast recieved message to all clients
@@ -119,10 +119,10 @@ def handle(client):
                 remove_client(client)
 
             # Set running flag to off
-            running = False
+            threading = False
             break
 
-# Recieve new Client connections
+# Recieve new Client connections, make Threads
 def receive():
     while True:
 

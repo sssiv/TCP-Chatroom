@@ -106,7 +106,7 @@ def handle(client):
             client.close()
             break
 
-# Recieving new clients
+# Recieving new clients, make Threads
 def recieve():
     # Stays true since we are always looking for new clients
     while True:
