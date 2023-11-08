@@ -82,14 +82,14 @@ def handle(client):
             message = client.recv(1024).decode('ascii')
 
             # Check if the '!LEAVE' command is part of the message
-            if '!LEAVE' in message:
+            if message == '!LEAVE':
                 # get username
                 username = clients_usernames_map[client]
 
                 # Outputs to all clients when someone left the chatroom
                 broadcast(f'{username} has left the chat\n'.encode('ascii'))
 
-                # Removes Client and it's Username from the list
+                # Removes Client and Username from the map
                 remove_client(client)
 
                 # Terminate leaving clients connection
@@ -111,10 +111,11 @@ def handle(client):
             # Terminates Client connection
             client.close()
 
-            # If the client where this error happened is found in the map
+            # Checks if client is still in the map
             if client in clients_usernames_map:
                 # Tell the chat they left unexpectedly
                 print(f"{clients_usernames_map[client]} has unexpectedly disconnected")
+                
                 # Then remove them from the map
                 remove_client(client)
 

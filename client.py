@@ -9,9 +9,13 @@ port = 12345
 # takes in an IP address and Socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Server IP
+# Subnet
 network_part = '192.168.1.'
+
+# Host
 host_part = input('Enter in host part: ')
+
+# Full IP
 host = network_part + host_part
 
 # Creates an input string to get username from client
@@ -20,7 +24,7 @@ username = input('Enter a username: ')
 # Connect the client to the server
 client.connect((host, port))
 
-# Flag to see if connection gets terminated
+# Connection Flag
 connected = True
 
 # Recieve clients messages from the server
@@ -62,7 +66,7 @@ def write():
             # Looks for specific message to disconnect
             if message.endswith('!LEAVE'):
                 # Send the leave command to the server
-                client.send(f'{username}!LEAVE'.encode('ascii'))  
+                client.send('!LEAVE'.encode('ascii'))  
                 connected = False
             else:
                 # Sends message from client
@@ -90,7 +94,7 @@ recieve_thread =  threading.Thread(target=recieve)
 recieve_thread.start()
 
 # Creates a thread to write messages between users
-write_thread =  threading.Thread(target=write)
+write_thread = threading.Thread(target=write)
 
 # Activates writing thread
 write_thread.start()
