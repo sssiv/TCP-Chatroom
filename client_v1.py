@@ -87,14 +87,15 @@ if __name__ == "__main__":
 
     # Connection Flag
     connected = True
-    # Creates a thread to reviece messages between users
-    recieve_thread =  threading.Thread(target=recieve)
 
-    # Activates recieving thread
-    recieve_thread.start()
-
-    # Creates a thread to write messages between users
+    # Makes seperate threads for recieving and writing messages
+    receive_thread =  threading.Thread(target=recieve)
     write_thread = threading.Thread(target=write)
 
-    # Activates writing thread
+    # Activate threads
+    receive_thread.start()
     write_thread.start()
+
+    # Makes sure each thread finishes before closing
+    receive_thread.join()
+    write_thread.join()

@@ -1,3 +1,8 @@
+# Difference from V2:
+#   * Server functions are now in a class
+#   * The socket is made and bind when a server object instance is made
+#   * run() is now the function to run the server instead of recieve()
+
 import socket
 import threading
 from ip import IPv4

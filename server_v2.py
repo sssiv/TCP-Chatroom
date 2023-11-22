@@ -1,3 +1,8 @@
+# Differnece from V1:
+#   * Uses a map to hold clients
+#   * Each client is mapped with their IP and username
+
+
 import threading
 import socket
 from ip import IPv4

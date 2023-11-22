@@ -1,3 +1,7 @@
+# Difference from V1:
+#   * Everything is within a client class
+#   * Client socket and connection is established when a client object instance is made
+
 import socket
 import threading
 
@@ -60,19 +64,34 @@ class Client:
                 break
 
 if __name__ == "__main__":
+    # Port
     port = 12345
+
+    # Subnet
     network_part = '192.168.1.'
+
+    # Network
     host_part = input('Enter in host part: ')
+
+    # Subnet + network
     host = network_part + host_part
+
+    # Username
     username = input('Enter a username: ')
+
+    # Client Object
     client = Client(host, port, username)
 
+    # while using the socket already connected from the client object
     with client.client:
+        # The point of this version is to eliminate the need to use args= here
         receive_thread = threading.Thread(target=client.receive)
         write_thread = threading.Thread(target=client.write)
 
+        # Start threads
         receive_thread.start()
         write_thread.start()
 
+        # Makes sure each thread finishes before closing
         receive_thread.join()
         write_thread.join()
